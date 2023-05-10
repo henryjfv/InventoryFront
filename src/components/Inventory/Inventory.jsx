@@ -1,13 +1,14 @@
 import '../../styles/css/components/inventory.css'
 import { BiPlusCircle, BiRefresh } from 'react-icons/bi'
-import { AiOutlineMail } from 'react-icons/ai'
+import { AiOutlineMail, AiOutlineCloudDownload } from 'react-icons/ai'
 import DataTable from 'react-data-table-component'
 
-export const Inventory = ({ reload, setShowModalEmail, setShowModal, filterText, setFilterText, loading, columns, filteredItems }) => {
+export const Inventory = ({ reload, setShowModalEmail, setShowModal, filterText, setFilterText, loading, columns, filteredItems, downloadPdf }) => {
   return (
     <>
       <div className='container-home'>
         <div style={{ display: 'flex', justifyContent: 'end' }}>
+          <button className='company-button' onClick={() => downloadPdf()}>Download File<AiOutlineCloudDownload className='icon-company' size={20} /> </button>
           <button className='company-button' onClick={() => setShowModalEmail(true)}>Send To <AiOutlineMail className='icon-company' size={20} /> </button>
           <button className='company-button' onClick={() => setShowModal(true)}>New Product <BiPlusCircle className='icon-company' size={20} /> </button>
         </div>

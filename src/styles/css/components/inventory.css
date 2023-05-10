@@ -2,3 +2,8 @@
   display: 'flex' !important;
   justify-content: 'end' !important;
 }
+
+
+.button-small {
+  width:'100px'
+}

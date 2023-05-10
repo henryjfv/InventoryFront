@@ -10,6 +10,13 @@ import { useSendEmail } from '../../components/Inventory/hooks/useSendEmail'
 
 export const InventoryScreen = () => {
   const { id, companyName } = useParams()
+
+  const [showModal, setShowModal] = useState(false)
+  const [showModalEmail, setShowModalEmail] = useState(false)
+  const [showModalDeleteProduct, setShowModalDeleteProduct] = useState(false)
+
+  const { email, setEmail, submitSendEmail, loadEmail, downloadPdf } = useSendEmail({ companyName, id })
+
   const {
     filterText,
     setFilterText,
@@ -17,8 +24,10 @@ export const InventoryScreen = () => {
     filteredItems,
     loading,
     inventoryData,
-    reload
-  } = useInventory(id)
+    reload,
+    idProduct,
+    setIdProduct
+  } = useInventory({ id, setShowModalDeleteProduct })
 
   const {
     product,
@@ -26,22 +35,19 @@ export const InventoryScreen = () => {
     total,
     setTotal,
     submitData,
-    load
+    load,
+    setLoad,
+    deleteData
   } = useRegister() // Inventory register
 
-  const { email, setEmail, submitSendEmail, loadEmail } = useSendEmail()
-
-  const [showModal, setShowModal] = useState(false)
-  const [showModalEmail, setShowModalEmail] = useState(false)
-
   useEffect(() => {
-    console.log('load again inventory')
     reload()
     setShowModal(false)
+    setShowModalDeleteProduct(false)
+    setLoad(false)
   }, [load])
 
   useEffect(() => {
-    console.log('close email')
     setShowModalEmail(false)
   }, [loadEmail])
 
@@ -57,6 +63,7 @@ export const InventoryScreen = () => {
         loading={loading}
         inventoryData={inventoryData}
         setShowModalEmail={setShowModalEmail}
+        downloadPdf={downloadPdf}
         reload={reload}
       />
       <Modal
@@ -83,6 +90,19 @@ export const InventoryScreen = () => {
           email={email}
           setEmail={setEmail}
         />
+      </Modal>
+      <Modal
+        show={showModalDeleteProduct}
+        handleClose={() => {
+          setIdProduct('')
+          setShowModalDeleteProduct(false)
+        }}
+        nameAffirmButton='Delete'
+        handleAffirm={() => deleteData(idProduct)}
+      >
+        <>
+          <h3>Are you sure, this can't be return back</h3>
+        </>
       </Modal>
     </>
   )

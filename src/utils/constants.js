@@ -10,5 +10,6 @@ export const COMPANY = {
 }
 export const INVENTORY = {
   inventory: `${ROUTE}/inventory`,
-  email: `${ROUTE}/inventory/send`
+  email: `${ROUTE}/inventory/send`,
+  download: `${ROUTE}/inventory/download`,
 }

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { isNotEmpty, isValidEmail } from '../../../utils/validator'
-import { senEmail } from '../../../services/inventory'
+import { senEmail, download } from '../../../services/inventory'
 
-export const useSendEmail = () => {
+export const useSendEmail = ({ companyName, id }) => {
   const [email, setEmail] = useState('')
   const [loadEmail, setLoad] = useState(0)
 
@@ -13,10 +13,15 @@ export const useSendEmail = () => {
     }
   }
 
+  const downloadPdf = () => {
+    download({ id, companyName })
+  }
+
   return {
     email,
     setEmail,
     submitSendEmail,
-    loadEmail
+    loadEmail,
+    downloadPdf
   }
 }

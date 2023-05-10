@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { getInventory } from '../../../services/inventory'
 import { manageErrorAuth } from '../../../utils/auth'
 
-export const useInventory = (id) => {
+export const useInventory = ({ id, setShowModalDeleteProduct }) => {
   const [filterText, setFilterText] = useState('')
   const [loading, setLoading] = useState(true)
 
   const [inventoryData, setInventoryData] = useState([])
+  const [idProduct, setIdProduct] = useState('')
 
   const columns = [
     {
@@ -18,7 +19,25 @@ export const useInventory = (id) => {
       name: 'Total',
       selector: row => row.total,
       sortable: true
-    }
+    },
+    {
+      name: '',
+      sortable: false,
+      cell: (row, index, column, id) => {
+        const { _id } = row
+        return (
+          <> {
+            <button className='danger' style={{ width: '100px' }} onClick={() => {
+              setIdProduct(_id)
+              setShowModalDeleteProduct(true)
+            }}
+            >Delete
+            </button>
+          }
+          </>
+        )
+      }
+    },
   ]
 
   const getInventoriesData = async () => {
@@ -54,6 +73,8 @@ export const useInventory = (id) => {
     filteredItems,
     loading,
     inventoryData,
-    reload
+    reload,
+    idProduct,
+    setIdProduct
   }
 }

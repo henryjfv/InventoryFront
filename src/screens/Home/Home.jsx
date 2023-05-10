@@ -10,16 +10,7 @@ export const Home = () => {
 
   const [showModal, setShowModal] = useState(false)
   const [showModalDeleteCompany, setShowModalDeleteCompany] = useState(false)
-
-  const {
-    filterText,
-    setFilterText,
-    columns,
-    filteredItems,
-    loading,
-    setDoAgainRequest,
-    reload
-  } = useHome({ setShowModalDeleteCompany, setIdCompany })
+  const [companyObject, setCompanyObject] = useState({})
 
   const {
     handleSubmit,
@@ -32,17 +23,50 @@ export const Home = () => {
     phone,
     setPhone,
     submitData,
+    updateData,
     load,
+    setLoad,
+    idCompany,
     setIdCompany,
     deleteData
-  } = useRegister() // Company register
+  } = useRegister() // Company registers
 
+  const {
+    filterText,
+    setFilterText,
+    columns,
+    filteredItems,
+    loading,
+    setDoAgainRequest,
+    reload
+  } = useHome({ setShowModalDeleteCompany, setIdCompany, setCompanyObject, setShowModal })
 
   useEffect(() => {
     reload()
     setDoAgainRequest('execute')
     setShowModal(false)
+    setShowModalDeleteCompany(false)
+    setIdCompany('')
+    setCompanyObject({})
+    setLoad(false)
   }, [load])
+
+  useEffect(() => {
+    setLegalNumber(companyObject?.legalNumber)
+    setName(companyObject?.name)
+    setAddress(companyObject?.address)
+    setPhone(companyObject?.phone)
+  }, [companyObject])
+
+  const closeModal = () => {
+    setIdCompany('')
+    setCompanyObject({})
+    setLegalNumber('')
+    setName('')
+    setAddress('')
+    setPhone('')
+    setShowModal(false)
+  }
 
   return (
     <>
@@ -58,9 +82,9 @@ export const Home = () => {
       />
       <Modal
         show={showModal}
-        handleClose={() => setShowModal(false)}
-        nameAffirmButton='Register'
-        handleAffirm={() => submitData()}
+        handleClose={() => { closeModal() }}
+        nameAffirmButton={idCompany.length > 0 ? 'Update' : 'Register'}
+        handleAffirm={() => idCompany.length > 0 ? updateData() : submitData()}
       >
         <Register
           handleSubmit={handleSubmit}
@@ -72,6 +96,7 @@ export const Home = () => {
           setAddress={setAddress}
           phone={phone}
           setPhone={setPhone}
+          idCompany={idCompany}
         />
       </Modal>
       <Modal

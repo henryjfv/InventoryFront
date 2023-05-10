@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { isNotEmpty } from '../../../utils/validator'
-import { postInventory } from '../../../services/inventory'
+import { postInventory, deleteProduct } from '../../../services/inventory'
 
 export const useRegister = () => {
   const [product, setProduct] = useState('')
@@ -13,6 +13,12 @@ export const useRegister = () => {
       setLoad(true)
       clearData()
     }
+  }
+
+  const deleteData = (idInventory) => {
+    const response = deleteProduct({ idInventory })
+    setLoad(true)
+    clearData()
   }
 
   const validate = () => {
@@ -30,6 +36,8 @@ export const useRegister = () => {
     total,
     setTotal,
     submitData,
-    load
+    load,
+    setLoad,
+    deleteData
   }
 }

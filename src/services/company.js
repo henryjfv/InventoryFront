@@ -20,10 +20,18 @@ export const postCompany = ({ data }) => {
     return error
   }
 }
-export const deleteCompany = ({ data }) => {
+export const deleteCompany = ({ idCompany }) => {
   try {
     const token = getLocalStorage('token')
-    return baseApi({ method: 'delete', url: COMPANY.company, header: { Authorization: `Bearer ${token}` }, data })
+    return baseApi({ method: 'delete', url: `${COMPANY.company}/${idCompany}`, header: { Authorization: `Bearer ${token}` } })
+  } catch (error) {
+    return error
+  }
+}
+export const putCompany = ({ data, idCompany }) => {
+  try {
+    const token = getLocalStorage('token')
+    return baseApi({ method: 'put', url: `${COMPANY.company}/${idCompany}`, header: { Authorization: `Bearer ${token}` }, data })
   } catch (error) {
     return error
   }

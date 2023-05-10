@@ -14,7 +14,7 @@
     width: 600vh;
     z-index: 1;
     background: #FFFFFF;
-    max-width: 800px;
+    max-width: 860px;
 
     padding: 45px;
     text-align: center;
@@ -113,4 +113,8 @@ ul.topnav li.right {
 
 .danger {
     background-color: #EF3B3A;
+}
+
+.warning {
+    background-color: #FFD600;
 }

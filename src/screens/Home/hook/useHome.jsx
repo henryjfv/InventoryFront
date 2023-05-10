@@ -4,7 +4,7 @@ import { getCompany } from '../../../services/company'
 import { manageErrorAuth } from '../../../utils/auth'
 import { getLocalStorage } from '../../../utils/storage'
 
-export const useHome = ({ setShowModalDeleteCompany, setIdCompany }) => {
+export const useHome = ({ setShowModalDeleteCompany, setIdCompany, setCompanyObject, setShowModal }) => {
   const [filterText, setFilterText] = useState('')
   const [loading, setLoading] = useState(true)
 
@@ -65,6 +65,25 @@ export const useHome = ({ setShowModalDeleteCompany, setIdCompany }) => {
               setShowModalDeleteCompany(true)
             }}
             >Delete
+            </button>
+          }
+          </>
+        )
+      }
+    },
+    {
+      name: '',
+      sortable: false,
+      cell: (row, index, column, id) => {
+        const { _id, name, address, phone, legalNumber } = row
+        return (
+          <> {(role && role === 'admin') &&
+            <button className='warning' onClick={() => {
+              setIdCompany(_id)
+              setCompanyObject({ name, address, phone, legalNumber })
+              setShowModal(true)
+            }}
+            >Edit
             </button>
           }
           </>

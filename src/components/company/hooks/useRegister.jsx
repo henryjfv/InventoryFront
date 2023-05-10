@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { isNotEmpty } from '../../../utils/validator'
-import { postCompany } from '../../../services/company.js'
+import { postCompany, deleteCompany, putCompany } from '../../../services/company.js'
 
 export const useRegister = () => {
   const [idCompany, setIdCompany] = useState('')
@@ -25,12 +25,20 @@ export const useRegister = () => {
   }
 
   const deleteData = async () => {
-    const response = await deleteCompany({ data: { idCompany } })
+    const response = await deleteCompany({ idCompany })
+    setLoad(true)
+    clearData()
+  }
+
+  const updateData = async () => {
+    console.log('hello');
+    const response = await putCompany({ data: { name, address, phone }, idCompany })
     setLoad(true)
     clearData()
   }
 
   const clearData = () => {
+    setIdCompany('')
     setLegalNumber('')
     setName('')
     setAddress('')
@@ -48,7 +56,10 @@ export const useRegister = () => {
     phone,
     setPhone,
     submitData,
+    updateData,
     load,
+    setLoad,
+    idCompany,
     setIdCompany,
     deleteData
   }

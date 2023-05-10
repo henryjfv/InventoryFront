@@ -10,14 +10,15 @@ export const Register = ({
   address,
   setAddress,
   phone,
-  setPhone
+  setPhone,
+  idCompany
 }) => {
   return (
     <>
       <h3 className='title'>Create a new company</h3>
       <form className='form-register' onSubmit={handleSubmit}>
         <div>
-          <input type='number' placeholder='NIT*' value={legalNumber} onChange={({ target }) => setLegalNumber(target.value)} />
+          <input disabled={idCompany ?? false} type='number' placeholder='NIT*' value={legalNumber} onChange={({ target }) => setLegalNumber(target.value)} />
           {!isNotEmpty(legalNumber) && <span className='errorInput'>This field don't be empty</span>}
         </div>
         <div>

@@ -29,3 +29,21 @@ export const senEmail = ({ data }) => {
     return error
   }
 }
+
+export const deleteProduct = ({ idInventory }) => {
+  try {
+    const token = getLocalStorage('token')
+    return baseApi({ method: 'delete', url: `${INVENTORY.inventory}/${idInventory}`, header: { Authorization: `Bearer ${token}` } })
+  } catch (error) {
+    return error
+  }
+}
+
+export const download = ({ id, companyName }) => {
+  try {
+    const token = getLocalStorage('token')
+    return baseApi({ method: 'get', url: `${INVENTORY.download}/${id}/${companyName}`, header: { Authorization: `Bearer ${token}` } })
+  } catch (error) {
+    return error
+  }
+}
