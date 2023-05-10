@@ -1,0 +1,4 @@
+.container-buttons-inventory {
+  display: 'flex' !important;
+  justify-content: 'end' !important;
+}
