@@ -12,7 +12,7 @@ yarn install
 yarn start
 
 ### Public on site
-https://henryreactlitethinking.onrender.com/
+https://inventoryhenryfernandez.onrender.com/
 
 ### User Testing
 - Admin 
