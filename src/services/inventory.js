@@ -1,6 +1,7 @@
 import { baseApi } from './api.js'
 import { INVENTORY } from '../utils/constants.js'
 import { getLocalStorage } from '../utils/storage.js'
+import axios from 'axios'
 
 export const getInventory = ({ id }) => {
   try {
@@ -42,7 +43,31 @@ export const deleteProduct = ({ idInventory }) => {
 export const download = ({ id, companyName }) => {
   try {
     const token = getLocalStorage('token')
-    return baseApi({ method: 'get', url: `${INVENTORY.download}/${id}/${companyName}`, header: { Authorization: `Bearer ${token}` } })
+
+    axios({
+      url: `${INVENTORY.download}/${id}/${companyName}`,
+      method: 'GET',
+      responseType: 'blob',
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((response) => {
+      console.log("🚀 ~ file: inventory.js:53 ~ download ~ response:", response)
+      // create file link in browser's memory
+      const href = URL.createObjectURL(response.data);
+
+      // create "a" HTML element with href to file & click
+      const link = document.createElement('a');
+      link.href = href;
+      link.setAttribute('download', 'report.pdf'); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+
+      // clean up "a" element & remove ObjectURL
+      document.body.removeChild(link);
+      URL.revokeObjectURL(href);
+
+      return ''
+
+    });
   } catch (error) {
     return error
   }
